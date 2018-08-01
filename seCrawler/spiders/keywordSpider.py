@@ -1,8 +1,14 @@
 __author__ = 'tixie'
 from scrapy.spiders import Spider
-from seCrawler.common.searResultPages import searResultPages
-from seCrawler.common.searchEngines import SearchEngineResultSelectors
+from searResultPages import searResultPages
+from searchEngines import SearchEngineResultSelectors
 from scrapy.selector import  Selector
+import html2text
+import requests
+import nltk
+from htmlst
+from nltk.tokenize import sent_tokenize, word_tokenize
+from htmlst import HTMLSentenceTokenizer
 
 class keywordSpider(Spider):
     name = 'keywordSpider'
@@ -21,6 +27,13 @@ class keywordSpider(Spider):
         pageUrls = searResultPages(keyword, se, int(pages))
         for url in pageUrls:
             print(url)
+            try:
+                example_html_one = open(url, 'r').read()
+                parsed_sentences = HTMLSentenceTokenizer().feed(example_html_one)
+                print(parsed_sentences)
+            finally:
+                print("Don!!!!!!!!!")
+
             self.start_urls.append(url)
 
     def parse(self, response):
